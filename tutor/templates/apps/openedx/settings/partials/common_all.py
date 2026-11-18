@@ -57,40 +57,40 @@ CACHES = {
         "KEY_PREFIX": "default",
         "VERSION": "1",
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://{% if REDIS_USERNAME and REDIS_PASSWORD %}{{ REDIS_USERNAME }}:{{ REDIS_PASSWORD }}{% endif %}@{{ REDIS_HOST }}:{{ REDIS_PORT }}/{{ OPENEDX_CACHE_REDIS_DB }}",
+        "LOCATION": "{{ 'rediss' if REDIS_USE_TLS else 'redis' }}://{% if REDIS_USERNAME and REDIS_PASSWORD %}{{ REDIS_USERNAME }}:{{ REDIS_PASSWORD }}{% endif %}@{{ REDIS_HOST }}:{{ REDIS_PORT }}/{{ OPENEDX_CACHE_REDIS_DB }}{{ '?ssl_cert_reqs=none' if REDIS_USE_TLS else '' }}",
     },
     "general": {
         "KEY_PREFIX": "general",
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://{% if REDIS_USERNAME and REDIS_PASSWORD %}{{ REDIS_USERNAME }}:{{ REDIS_PASSWORD }}{% endif %}@{{ REDIS_HOST }}:{{ REDIS_PORT }}/{{ OPENEDX_CACHE_REDIS_DB }}",
+        "LOCATION": "{{ 'rediss' if REDIS_USE_TLS else 'redis' }}://{% if REDIS_USERNAME and REDIS_PASSWORD %}{{ REDIS_USERNAME }}:{{ REDIS_PASSWORD }}{% endif %}@{{ REDIS_HOST }}:{{ REDIS_PORT }}/{{ OPENEDX_CACHE_REDIS_DB }}{{ '?ssl_cert_reqs=none' if REDIS_USE_TLS else '' }}",
     },
     "mongo_metadata_inheritance": {
         "KEY_PREFIX": "mongo_metadata_inheritance",
         "TIMEOUT": 300,
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://{% if REDIS_USERNAME and REDIS_PASSWORD %}{{ REDIS_USERNAME }}:{{ REDIS_PASSWORD }}{% endif %}@{{ REDIS_HOST }}:{{ REDIS_PORT }}/{{ OPENEDX_CACHE_REDIS_DB }}",
+        "LOCATION": "{{ 'rediss' if REDIS_USE_TLS else 'redis' }}://{% if REDIS_USERNAME and REDIS_PASSWORD %}{{ REDIS_USERNAME }}:{{ REDIS_PASSWORD }}{% endif %}@{{ REDIS_HOST }}:{{ REDIS_PORT }}/{{ OPENEDX_CACHE_REDIS_DB }}{{ '?ssl_cert_reqs=none' if REDIS_USE_TLS else '' }}",
     },
     "configuration": {
         "KEY_PREFIX": "configuration",
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://{% if REDIS_USERNAME and REDIS_PASSWORD %}{{ REDIS_USERNAME }}:{{ REDIS_PASSWORD }}{% endif %}@{{ REDIS_HOST }}:{{ REDIS_PORT }}/{{ OPENEDX_CACHE_REDIS_DB }}",
+        "LOCATION": "{{ 'rediss' if REDIS_USE_TLS else 'redis' }}://{% if REDIS_USERNAME and REDIS_PASSWORD %}{{ REDIS_USERNAME }}:{{ REDIS_PASSWORD }}{% endif %}@{{ REDIS_HOST }}:{{ REDIS_PORT }}/{{ OPENEDX_CACHE_REDIS_DB }}{{ '?ssl_cert_reqs=none' if REDIS_USE_TLS else '' }}",
     },
     "celery": {
         "KEY_PREFIX": "celery",
         "TIMEOUT": 7200,
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://{% if REDIS_USERNAME and REDIS_PASSWORD %}{{ REDIS_USERNAME }}:{{ REDIS_PASSWORD }}{% endif %}@{{ REDIS_HOST }}:{{ REDIS_PORT }}/{{ OPENEDX_CACHE_REDIS_DB }}",
+        "LOCATION": "{{ 'rediss' if REDIS_USE_TLS else 'redis' }}://{% if REDIS_USERNAME and REDIS_PASSWORD %}{{ REDIS_USERNAME }}:{{ REDIS_PASSWORD }}{% endif %}@{{ REDIS_HOST }}:{{ REDIS_PORT }}/{{ OPENEDX_CACHE_REDIS_DB }}{{ '?ssl_cert_reqs=none' if REDIS_USE_TLS else '' }}",
     },
     "course_structure_cache": {
         "KEY_PREFIX": "course_structure",
         "TIMEOUT": 604800, # 1 week
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://{% if REDIS_USERNAME and REDIS_PASSWORD %}{{ REDIS_USERNAME }}:{{ REDIS_PASSWORD }}{% endif %}@{{ REDIS_HOST }}:{{ REDIS_PORT }}/{{ OPENEDX_CACHE_REDIS_DB }}",
+        "LOCATION": "{{ 'rediss' if REDIS_USE_TLS else 'redis' }}://{% if REDIS_USERNAME and REDIS_PASSWORD %}{{ REDIS_USERNAME }}:{{ REDIS_PASSWORD }}{% endif %}@{{ REDIS_HOST }}:{{ REDIS_PORT }}/{{ OPENEDX_CACHE_REDIS_DB }}{{ '?ssl_cert_reqs=none' if REDIS_USE_TLS else '' }}",
     },
     "ora2-storage": {
         "KEY_PREFIX": "ora2-storage",
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://{% if REDIS_USERNAME and REDIS_PASSWORD %}{{ REDIS_USERNAME }}:{{ REDIS_PASSWORD }}{% endif %}@{{ REDIS_HOST }}:{{ REDIS_PORT }}/{{ OPENEDX_CACHE_REDIS_DB }}",
+        "LOCATION": "{{ 'rediss' if REDIS_USE_TLS else 'redis' }}://{% if REDIS_USERNAME and REDIS_PASSWORD %}{{ REDIS_USERNAME }}:{{ REDIS_PASSWORD }}{% endif %}@{{ REDIS_HOST }}:{{ REDIS_PORT }}/{{ OPENEDX_CACHE_REDIS_DB }}{{ '?ssl_cert_reqs=none' if REDIS_USE_TLS else '' }}",
     }
 }
 
@@ -272,7 +272,7 @@ OPENEDX_LEARNING = {
 
 # edx-event-bus-redis settings
 EVENT_BUS_PRODUCER = 'edx_event_bus_redis.create_producer'
-EVENT_BUS_REDIS_CONNECTION_URL = 'redis://@redis:6379/'
+EVENT_BUS_REDIS_CONNECTION_URL = "{{ 'rediss' if REDIS_USE_TLS else 'redis' }}://{% if REDIS_USERNAME and REDIS_PASSWORD %}{{ REDIS_USERNAME }}:{{ REDIS_PASSWORD }}{% endif %}@{{ REDIS_HOST }}:{{ REDIS_PORT }}/0"
 EVENT_BUS_TOPIC_PREFIX = 'dev'
 EVENT_BUS_CONSUMER = 'edx_event_bus_redis.RedisEventConsumer'
 
